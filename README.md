@@ -6,7 +6,10 @@ A faculty-facing practical attendance management web application built for Sipna
 
 ### 1. Prerequisites
 - **Node.js**: v18.0.0+ (v22.20.0 recommended)
+- **Docker & Docker Compose** (Optional: For zero-installation PostgreSQL database)
 - **PostgreSQL**: v14.0+ (Optional: Embedded `pg-mem` fallback activates automatically if local PostgreSQL service is inactive)
+
+---
 
 ### 2. Installation
 ```bash
@@ -16,16 +19,42 @@ cd sipna-practical-attendance
 npm install
 ```
 
-### 3. Database Setup (Persistent PostgreSQL)
+---
+
+### 3. Database Setup Options
+
+#### Option A: Docker PostgreSQL (Recommended - Zero Installation)
+Run PostgreSQL in a Docker container using Docker Compose:
+
 ```bash
-# Start PostgreSQL service and create database
+# Start Docker PostgreSQL container in background
+npm run docker:db
+# or: docker compose up -d postgres
+```
+
+The container automatically creates the `sipna_attendance` database on port `5432`. When `npm start` runs, the server automatically applies `schema.sql` and `seed.sql`.
+
+#### Option B: Full-Stack Docker Deployment
+Run both Node.js application and PostgreSQL in Docker containers:
+
+```bash
+# Start full application stack in Docker
+npm run docker:up
+# or: docker compose up -d
+```
+Open **`http://localhost:3000`** in your browser. Stop containers anytime with `npm run docker:down`.
+
+#### Option C: Native PostgreSQL Installation
+```bash
+# Create database on local PostgreSQL server
 createdb -U postgres sipna_attendance
 
-# Execute schema and seed data
+# Execute schema and seed data manually (Optional: server auto-loads schema & seed on startup)
 psql -U postgres -d sipna_attendance -f server/db/schema.sql
 psql -U postgres -d sipna_attendance -f server/db/seed.sql
 ```
-*(Note: `server/server.js` automatically executes `schema.sql` and `seed.sql` on startup).*
+
+---
 
 ### 4. Configuration
 Create a `.env` file in the root directory (or copy from `.env.example`):
@@ -42,13 +71,18 @@ DB_PASSWORD=postgres
 SESSION_SECRET=sipna_practical_attendance_secret_key_2026
 ```
 
-### 5. Start Application
+---
+
+### 5. Start Application (Local Development)
 ```bash
 npm start
 ```
 Open **`http://localhost:3000`** in your browser.
 
+---
+
 ### 6. Test Credentials
 - **Faculty Email:** `abc@sipna.ac.in`
 - **Password:** `Demo@123`
-- **Assigned Practical:** DBMS → Division CS-B → Batch B2
+- **Assigned Practical:** DBMS -> Division CS-B -> Batch B2
+

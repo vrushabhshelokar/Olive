@@ -1,0 +1,47 @@
+version: "3.8"
+
+services:
+  # PostgreSQL Database Service
+  postgres:
+    image: postgres:15-alpine
+    container_name: sipna_postgres
+    restart: always
+    environment:
+      POSTGRES_DB: sipna_attendance
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d sipna_attendance"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # Node.js Application Service (Full-stack containerized deployment)
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: sipna_app
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      PORT: 3000
+      NODE_ENV: production
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: sipna_attendance
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      SESSION_SECRET: sipna_practical_attendance_secret_key_2026
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  postgres_data:
+

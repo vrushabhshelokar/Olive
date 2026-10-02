@@ -1,27 +1,30 @@
 {
-  "name": "sipna-practical-attendance",
-  "version": "1.0.0",
-  "description": "Sipna Practical Attendance & Student Management System - DBMS Academic Project",
-  "main": "server/server.js",
-  "scripts": {
-    "start": "node server/server.js",
-    "dev": "node server/server.js"
-  },
-  "keywords": [
-    "attendance",
-    "postgresql",
-    "express",
-    "vanilla-js",
-    "dbms"
-  ],
-  "author": "Sipna College CSE",
-  "license": "ISC",
-  "dependencies": {
-    "bcrypt": "^5.1.1",
-    "dotenv": "^16.4.5",
-    "express": "^4.19.2",
-    "express-session": "^1.18.0",
-    "pg": "^8.11.5",
-    "pg-mem": "^3.0.4"
-  }
+    "name":  "sipna-practical-attendance",
+    "version":  "1.0.0",
+    "description":  "Sipna Practical Attendance \u0026 Student Management System - DBMS Academic Project",
+    "main":  "server/server.js",
+    "scripts":  {
+                    "start":  "node server/server.js",
+                    "dev":  "node server/server.js",
+                    "docker:db":  "docker compose up -d postgres",
+                    "docker:up":  "docker compose up -d",
+                    "docker:down":  "docker compose down"
+                },
+    "keywords":  [
+                     "attendance",
+                     "postgresql",
+                     "express",
+                     "vanilla-js",
+                     "dbms"
+                 ],
+    "author":  "Sipna College CSE",
+    "license":  "ISC",
+    "dependencies":  {
+                         "bcrypt":  "^5.1.1",
+                         "dotenv":  "^16.4.5",
+                         "express":  "^4.19.2",
+                         "express-session":  "^1.18.0",
+                         "pg":  "^8.11.5",
+                         "pg-mem":  "^3.0.4"
+                     }
 }

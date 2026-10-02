@@ -2,7 +2,7 @@
 
 -- 1. Insert Divisions
 INSERT INTO division (division_id, name, semester) VALUES
-(1, 'CS-B', 5),
+(1, 'CS-A', 5),
 (2, 'CS-B', 5),
 (3, 'CS-C', 5)
 ON CONFLICT (name) DO UPDATE SET semester = EXCLUDED.semester;
@@ -30,9 +30,9 @@ ON CONFLICT (code) DO UPDATE SET name = EXCLUDED.name, type = EXCLUDED.type, sem
 -- 4. Insert Demo Faculty
 -- Default Password for both demo accounts: Demo@123
 INSERT INTO faculty (faculty_id, faculty_code, name, email, department, designation, password_hash) VALUES
-(1, 'FAC001', 'Prof. ABC', 'abc@sipna.ac.in', 'Computer Science & Engineering', 'Assistant Professor', '$2b$10$ASaqbgd3O.hyg692U0AghegiYbdb5N/G5zaj3AvEXZgmqD562qdbu'),
-(2, 'FAC002', 'Prof. XYZ', 'xyz@sipna.ac.in', 'Computer Science & Engineering', 'Associate Professor', '$2b$10$ASaqbgd3O.hyg692U0AghegiYbdb5N/G5zaj3AvEXZgmqD562qdbu')
-ON CONFLICT (email) DO UPDATE SET name = EXCLUDED.name, department = EXCLUDED.department, designation = EXCLUDED.designation;
+(1, 'FAC001', 'Prof. ABC', 'abc@sipna.ac.in', 'Computer Science & Engineering', 'Assistant Professor', '$2b$10$wCy9C3cxxCCqqCprl1fCA.jx/3Y2N4U1rLSKvygoPGFVwoY5jmtKm'),
+(2, 'FAC002', 'Prof. XYZ', 'xyz@sipna.ac.in', 'Computer Science & Engineering', 'Associate Professor', '$2b$10$wCy9C3cxxCCqqCprl1fCA.jx/3Y2N4U1rLSKvygoPGFVwoY5jmtKm')
+ON CONFLICT (email) DO UPDATE SET name = EXCLUDED.name, department = EXCLUDED.department, designation = EXCLUDED.designation, password_hash = EXCLUDED.password_hash;
 
 -- 5. Insert Faculty Assignments
 INSERT INTO faculty_assignment (faculty_id, subject_id, division_id, batch_id) VALUES
@@ -137,3 +137,5 @@ INSERT INTO attendance (session_id, student_id, status) VALUES
 (3, 21, 'PRESENT'), (3, 22, 'PRESENT'), (3, 23, 'PRESENT'), (3, 24, 'PRESENT'), (3, 25, 'PRESENT'),
 (3, 26, 'PRESENT'), (3, 27, 'PRESENT'), (3, 28, 'PRESENT'), (3, 29, 'ABSENT'), (3, 30, 'PRESENT')
 ON CONFLICT (session_id, student_id) DO NOTHING;
+
+
