@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Practicals - Sipna Practical Attendance System</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <script src="/js/api.js"></script>
+  <script src="/js/app.js"></script>
+  <script src="/js/practicals.js"></script>
+</head>
+<body>
+
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="header-brand">
+        <div class="header-logo">S</div>
+        <div>
+          <div class="header-title">SIPNA ATTENDANCE</div>
+          <div class="header-subtitle">Practical Attendance System</div>
+        </div>
+      </div>
+      <div class="header-user">
+        <div class="user-info">
+          <div class="user-name" id="header-user-name">Faculty Member</div>
+          <div class="user-role" id="header-user-role">Sipna CSE</div>
+        </div>
+        <button id="logout-btn" class="btn btn-secondary btn-sm">Logout</button>
+      </div>
+    </header>
+
+    <div class="app-body">
+      <!-- Sidebar -->
+      <aside class="app-sidebar">
+        <a href="/dashboard.html" class="nav-item">
+          <span class="nav-icon">🏠</span> Dashboard
+        </a>
+        <a href="/practicals.html" class="nav-item active">
+          <span class="nav-icon">📚</span> My Practicals
+        </a>
+        <a href="/students.html" class="nav-item">
+          <span class="nav-icon">👥</span> Student Directory
+        </a>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="app-main">
+        <div class="breadcrumbs">
+          <a href="/dashboard.html">Dashboard</a> <span class="sep">/</span>
+          <span>My Practicals</span>
+        </div>
+
+        <div style="margin-bottom: 24px;">
+          <h1 style="font-size: 1.6rem; color: var(--text-primary); margin-bottom: 4px;">My Practical Assignments</h1>
+          <p style="color: var(--text-muted); font-size: 0.9rem;">Select a practical subject, division, and batch to take attendance or review history.</p>
+        </div>
+
+        <div id="practicals-container">
+          <div class="state-container">
+            <div class="spinner"></div>
+            <p style="margin-top: 10px;">Loading assigned practical batches...</p>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+</body>
+</html>
