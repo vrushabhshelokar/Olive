@@ -30,15 +30,20 @@
 .header-logo {
   width: 32px;
   height: 32px;
-  background-color: var(--primary-color);
-  color: #fff;
+  
+  /* FIXED PATH: Goes up one level, then into images */
+  background-image: url('../images/sipna_logo.png'); 
+  background-size: contain;     
+  background-repeat: no-repeat; 
+  background-position: center;  
+  
   border-radius: var(--radius-md);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 700;
-  font-size: 1.1rem;
 }
+
+
 
 .header-title {
   font-size: 1.1rem;

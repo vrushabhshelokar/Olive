@@ -1,4 +1,4 @@
-const db = require('../db/connection');
+﻿const db = require('../db/connection');
 
 class AssignmentRepository {
   async findByFacultyId(facultyId) {
@@ -14,13 +14,14 @@ class AssignmentRepository {
         fa.division_id,
         d.name AS division_name,
         fa.batch_id,
-        b.name AS batch_name
+        b.name AS batch_name,
+        (SELECT COUNT(*)::int FROM student st WHERE st.batch_id = fa.batch_id) AS student_count
        FROM faculty_assignment fa
        JOIN subject s ON fa.subject_id = s.subject_id
        JOIN division d ON fa.division_id = d.division_id
        JOIN batch b ON fa.batch_id = b.batch_id
        WHERE fa.faculty_id = $1
-       ORDER BY s.name ASC, d.name ASC, b.name ASC`,
+       ORDER BY s.subject_id ASC, b.name ASC`,
       [facultyId]
     );
     return res.rows;

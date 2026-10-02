@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -36,13 +36,13 @@
       <!-- Sidebar -->
       <aside class="app-sidebar">
         <a href="/dashboard.html" class="nav-item">
-          <span class="nav-icon">🏠</span> Dashboard
+          <span class="nav-icon">📊</span> Dashboard
         </a>
         <a href="/practicals.html" class="nav-item active">
-          <span class="nav-icon">📚</span> My Practicals
+          <span class="nav-icon">🔬</span> My Practicals
         </a>
         <a href="/students.html" class="nav-item">
-          <span class="nav-icon">👥</span> Student Directory
+          <span class="nav-icon">🎓</span> Student Directory
         </a>
       </aside>
 
@@ -50,18 +50,18 @@
       <main class="app-main">
         <div class="breadcrumbs">
           <a href="/dashboard.html">Dashboard</a> <span class="sep">/</span>
-          <span>My Practicals</span>
+          <a href="/practicals.html">My Practicals</a><span id="breadcrumb-subject"></span>
         </div>
 
         <div style="margin-bottom: 24px;">
-          <h1 style="font-size: 1.6rem; color: var(--text-primary); margin-bottom: 4px;">My Practical Assignments</h1>
-          <p style="color: var(--text-muted); font-size: 0.9rem;">Select a practical subject, division, and batch to take attendance or review history.</p>
+          <h1 style="font-size: 1.6rem; color: var(--text-primary); margin-bottom: 4px;">My Practical Labs</h1>
+          <p style="color: var(--text-muted); font-size: 0.9rem;">Select a practical lab to view batches and manage practical attendance.</p>
         </div>
 
         <div id="practicals-container">
           <div class="state-container">
             <div class="spinner"></div>
-            <p style="margin-top: 10px;">Loading assigned practical batches...</p>
+            <p style="margin-top: 10px;">Loading assigned practical labs...</p>
           </div>
         </div>
       </main>

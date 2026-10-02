@@ -1,4 +1,4 @@
-/* Sipna Practical Attendance System - Attendance Controller Script */
+﻿/* Sipna Practical Attendance System - Attendance Controller Script */
 
 let attendanceState = {
   subjectId: null,
@@ -125,22 +125,21 @@ function renderContextHeader() {
     breadcrumbElem.innerHTML = `
       <a href="/dashboard.html">Dashboard</a> <span class="sep">/</span>
       <a href="/practicals.html">My Practicals</a> <span class="sep">/</span>
-      <span>${attendanceState.subject.code}</span> <span class="sep">/</span>
-      <span>${attendanceState.division.name}</span> <span class="sep">/</span>
+      <a href="/practicals.html?subjectId=${attendanceState.subject.id}">${attendanceState.subject.code}</a> <span class="sep">/</span>
       <span>${attendanceState.batch.name}</span> <span class="sep">/</span>
-      <span>Attendance</span>
+      <span>Take Attendance</span>
     `;
   }
 
   if (headerElem) {
     headerElem.innerHTML = `
-      <div class="context-header">
-        <div class="context-title">${attendanceState.subject.name} Practical Attendance</div>
-        <div style="font-size: 0.9rem; color: #cbd5e1; margin-top: 2px;">Date: <strong>${todayStr}</strong></div>
-        <div class="context-tags">
-          <span class="context-tag">Subject: ${attendanceState.subject.code}</span>
-          <span class="context-tag">Division: ${attendanceState.division.name}</span>
-          <span class="context-tag">Batch: ${attendanceState.batch.name}</span>
+      <div class="context-header" style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); color: #fff; padding: 20px 24px; border-radius: var(--radius-lg); margin-bottom: 24px;">
+        <h2 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 4px; color:white; ">${attendanceState.subject.name}</h2>
+        <div style="font-size: 0.9rem; color: #94a3b8; margin-bottom: 12px;">Date: <strong>${todayStr}</strong></div>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+          <span class="badge" style="background: #3b82f6; color: #fff;">Division: ${attendanceState.division.name}</span>
+          <span class="badge" style="background: #10b981; color: #fff;">Batch: ${attendanceState.batch.name}</span>
+          <span class="badge" style="background: #6366f1; color: #fff;">Subject: ${attendanceState.subject.code}</span>
         </div>
       </div>
     `;
@@ -184,21 +183,21 @@ function renderAttendanceForm() {
         <table class="table">
           <thead>
             <tr>
-              <th style="width: 80px;">#</th>
-              <th>BT ID</th>
+              <th style="width: 60px;">#</th>
+              <th style="width: 140px;">BT ID</th>
               <th>Student Name</th>
               <th style="text-align: right; padding-right: 24px;">Attendance Status</th>
             </tr>
           </thead>
           <tbody id="student-table-body">
             ${attendanceState.students.map((st, idx) => `
-              <tr data-id="${st.student_id}" data-search="${st.bt_id.toLowerCase()} ${st.name.toLowerCase()}">
+              <tr data-search="${st.bt_id.toLowerCase()} ${st.name.toLowerCase()}">
                 <td>${idx + 1}</td>
-                <td style="font-weight: 700; color: var(--text-primary);">${st.bt_id}</td>
-                <td>${st.name}</td>
+                <td style="font-weight: 700; color: var(--primary-color);">${st.bt_id}</td>
+                <td style="font-weight: 500; color: var(--text-primary);">${st.name}</td>
                 <td style="text-align: right;">
-                  <button type="button" class="status-toggle absent" data-id="${st.student_id}">
-                    ✕ ABSENT
+                  <button class="status-toggle absent" data-id="${st.student_id}">
+                    ✗ ABSENT
                   </button>
                 </td>
               </tr>
@@ -207,11 +206,11 @@ function renderAttendanceForm() {
         </table>
       </div>
 
-      <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">
+      <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
         <div style="width: 100%; max-width: 400px;">
-          <input type="text" id="session-description" class="form-control" placeholder="Optional session topic/description (e.g. Lab Experiment 4)">
+          <input type="text" id="session-description" class="form-control" placeholder="Optional session topic (e.g. DBMS Lab Experiment 1)">
         </div>
-        <button id="save-attendance-btn" class="btn btn-primary" style="padding: 12px 28px; font-size: 1rem;">
+        <button id="save-attendance-btn" class="btn btn-primary" style="padding: 12px 28px; font-size: 1rem; font-weight: 700;">
           💾 Save Practical Attendance
         </button>
       </div>
@@ -285,7 +284,7 @@ function toggleStudentStatus(studentId, buttonElem) {
     buttonElem.innerHTML = '✓ PRESENT';
   } else {
     buttonElem.className = 'status-toggle absent';
-    buttonElem.innerHTML = '✕ ABSENT';
+    buttonElem.innerHTML = '✗ ABSENT';
   }
 
   updateSummaryCounts();
@@ -302,7 +301,7 @@ function updateAllToggleButtons() {
       btn.innerHTML = '✓ PRESENT';
     } else {
       btn.className = 'status-toggle absent';
-      btn.innerHTML = '✕ ABSENT';
+      btn.innerHTML = '✗ ABSENT';
     }
   });
 }
@@ -468,7 +467,7 @@ function renderCompletedView(sessionDetails) {
                 <td>${st.student_name}</td>
                 <td style="text-align: right;">
                   <span class="badge ${st.status === 'PRESENT' ? 'badge-present' : 'badge-absent'}">
-                    ${st.status === 'PRESENT' ? '✓ PRESENT' : '✕ ABSENT'}
+                    ${st.status === 'PRESENT' ? '✓ PRESENT' : '✗ ABSENT'}
                   </span>
                 </td>
               </tr>

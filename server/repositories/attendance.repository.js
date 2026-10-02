@@ -1,4 +1,4 @@
-const db = require('../db/connection');
+﻿const db = require('../db/connection');
 
 class AttendanceRepository {
   async findSessionByContextAndDate({ subjectId, divisionId, batchId, sessionDate }) {
@@ -166,7 +166,7 @@ class AttendanceRepository {
     );
     const totalSessions = sessionsRes.rows.length;
 
-    // 2. Get student-wise attendance counts for this batch and subject
+    // 2. Get student-wise attendance counts strictly scoped to this batch AND this subject
     const studentStatsRes = await db.query(
       `SELECT 
         st.student_id,
@@ -176,8 +176,8 @@ class AttendanceRepository {
         SUM(CASE WHEN a.status = 'PRESENT' THEN 1 ELSE 0 END)::int AS present_count,
         SUM(CASE WHEN a.status = 'ABSENT' THEN 1 ELSE 0 END)::int AS absent_count
        FROM student st
-       LEFT JOIN attendance a ON st.student_id = a.student_id
-       LEFT JOIN practical_session ps ON a.session_id = ps.session_id AND ps.subject_id = $2
+       LEFT JOIN practical_session ps ON ps.batch_id = st.batch_id AND ps.subject_id = $2
+       LEFT JOIN attendance a ON a.session_id = ps.session_id AND a.student_id = st.student_id
        WHERE st.batch_id = $1
        GROUP BY st.student_id, st.bt_id, st.name
        ORDER BY st.bt_id ASC`,
@@ -185,16 +185,17 @@ class AttendanceRepository {
     );
 
     const students = studentStatsRes.rows.map(st => {
-      const present = st.present_count || 0;
-      const absent = st.absent_count || 0;
-      const percentage = totalSessions > 0 ? parseFloat(((present / totalSessions) * 100).toFixed(2)) : 0;
+      const rawPresent = st.present_count || 0;
+      const rawAbsent = st.absent_count || 0;
+      const present = totalSessions > 0 ? Math.min(rawPresent, totalSessions) : 0;
+      const percentage = totalSessions > 0 ? parseFloat(Math.min((present / totalSessions) * 100, 100).toFixed(2)) : 0;
       return {
         studentId: st.student_id,
         btId: st.bt_id,
         name: st.student_name,
         totalSessions,
         present,
-        absent,
+        absent: rawAbsent,
         percentage
       };
     });
